@@ -31,6 +31,36 @@
             attribution: '&copy; OpenStreetMap &copy; CARTO'
           }).addTo(map);
 
+          const NEW_ENGLAND_AIRPORTS = [
+            { code: 'BOS', name: 'Boston Logan International',     lat: 42.3656, lon: -71.0096 },
+            { code: 'PVD', name: 'T.F. Green International',       lat: 41.7268, lon: -71.4283 },
+            { code: 'MHT', name: 'Manchester-Boston Regional',     lat: 42.9326, lon: -71.4357 },
+            { code: 'BDL', name: 'Bradley International',          lat: 41.9389, lon: -72.6832 },
+            { code: 'ORH', name: 'Worcester Regional',             lat: 42.2673, lon: -71.8757 },
+            { code: 'BED', name: 'Hanscom Field',                  lat: 42.4700, lon: -71.2890 },
+            { code: 'HYA', name: 'Barnstable Municipal',           lat: 41.6693, lon: -70.2804 },
+            { code: 'ACK', name: 'Nantucket Memorial',             lat: 41.2531, lon: -70.0602 },
+            { code: 'MVY', name: "Martha's Vineyard",              lat: 41.3931, lon: -70.6143 },
+            { code: 'PWM', name: 'Portland International Jetport', lat: 43.6462, lon: -70.3093 },
+            { code: 'BGR', name: 'Bangor International',           lat: 44.8074, lon: -68.8281 },
+            { code: 'BTV', name: 'Burlington International',       lat: 44.4720, lon: -73.1533 },
+          ];
+
+          NEW_ENGLAND_AIRPORTS.forEach(({ code, name, lat, lon }) => {
+            const icon = L.divIcon({
+              className: '',
+              html: `<div style="display:flex;align-items:center;white-space:nowrap;">
+                <div style="width:8px;height:8px;background:#fff;border-radius:50%;border:1.5px solid #aaa;flex-shrink:0;"></div>
+                <span style="font-size:10px;color:#fff;background:rgba(0,0,0,0.6);padding:1px 3px;border-radius:2px;margin-left:3px;font-family:monospace;">${code}</span>
+              </div>`,
+              iconSize: null,
+              iconAnchor: [4, 4],
+            });
+            L.marker([lat, lon], { icon, interactive: true, zIndexOffset: -1000 })
+              .bindPopup(`<b>${code}</b><br>${name}`)
+              .addTo(map);
+          });
+
           function makePlaneIcon(flight, heading) {
             const rotation = (heading ?? 0) - 90;
             const label = flight
